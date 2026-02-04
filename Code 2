@@ -1,0 +1,33 @@
+// Player movement
+ysp += 0.1; // gravity
+xsp = 0;
+
+// Left/right movement
+if (keyboard_check(vk_left)) {
+    xsp = -1;
+}
+
+if (keyboard_check(vk_right)) {
+    xsp = 1;
+}
+
+// Ground check & jump
+if (place_meeting(x, y + 1, [Insert ground tile here])) {
+    ysp = 0;
+    if (keyboard_check(vk_up)) {
+        ysp = -2; // jump
+    }
+}
+
+// Move the player, check collisions
+move_and_collide(xsp, ysp, [Insert collision layer here]);
+
+// Spike collision -> restart room
+if (place_meeting(x, y, [Insert spike tile here])) {
+    room_restart();
+}
+
+// Flag collision -> go to next room
+if (place_meeting(x, y, [Insert flag tile here])) {
+    room_goto_next();
+}
